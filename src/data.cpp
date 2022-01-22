@@ -7,7 +7,7 @@ xCoord(NULL),
 yCoord(NULL),
 distMatrix(NULL){
 
-	if ( qtParam < 2 )  {
+	if ( qtParam < 3 )  {
 		cout << "Missing parameters\n";
 		cout << " ./exeLaRP [Instance]"  << endl;
 		exit( 1 );        

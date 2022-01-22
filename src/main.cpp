@@ -9,6 +9,7 @@
 Data* data;
 double** cost_matrix;
 int mode;
+int search_type;
 
 typedef struct
 {
@@ -17,19 +18,17 @@ typedef struct
     double lower_bound;
 } Node;
 
-void depth_first_search();
+void run_bb();
 
 int main(int argc, char** argv)
 {
     data = new Data(argc, argv[1]);
 	data->readData();
 
+    search_type = std::stoi(argv[2]);
     mode = HUNGARIAN_MODE_MINIMIZE_COST;
 
-    if(std::stoi(argv[2]) == 1)
-    {
-        depth_first_search();
-    }
+    run_bb();
 
     delete data;
 
@@ -228,7 +227,14 @@ void branch(Node& current_node, std::list<Node>& tree)
                 current_node.subtours[choosen_subtour][i+1]
             )
         );
-        tree.insert(++tree.begin(), {prohibited_edges});
+        if(search_type == 0)
+        {
+            tree.insert(++tree.begin(), {prohibited_edges});
+        }
+        if(search_type == 1)
+        {
+            tree.push_back({prohibited_edges});
+        }
     }
 }
 
@@ -237,7 +243,7 @@ void prune(std::list<Node>& tree)
     tree.pop_front();
 }
 
-void depth_first_search()
+void run_bb()
 {
     Node root;
     std::list<Node> tree;
@@ -270,10 +276,19 @@ void depth_first_search()
     auto timer_end = chrono::system_clock::now();
     chrono::duration<double> duration = timer_end - timer_start;
     
+    printf("SEARCH: ");
+    if(search_type == 0)
+    {
+        printf("DFS");
+    }
+    if(search_type == 1)
+    {
+        printf("BFS");
+    }
+    printf("\nTIME: %.2lfs\n", duration.count());
     printf("BEST NODE:\n");
     if(best_node->lower_bound < INFINITE)
     {
         print_node(best_node, true, true, true);
     }
-    printf("TIME: %.2lfs\n", duration.count());
 }

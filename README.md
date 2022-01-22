@@ -22,4 +22,4 @@ After done compiling, execute the 'bb' program passing the required arguments, l
 Arguments
 ----------
 **ARG1**: Instance path, it should be like this: instances/name.tsp.  
-**ARG2**: Search type, 1 for Depth-First Search (DFS) with backtracking and 2 for Breadth-First Search (BFS).  
+**ARG2**: Search type, 0 for Depth-First Search (DFS) with backtracking and 1 for Breadth-First Search (BFS).  
